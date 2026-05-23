@@ -24,10 +24,10 @@ import settings from '../content/settings/main.json';
         <form
           name="contact"
           method="POST"
+          action="/success/"
           data-netlify="true"
           netlify-honeypot="bot-field"
           class="contact-form"
-          id="contact-form"
         >
           <input type="hidden" name="form-name" value="contact" />
           <p class="hidden" aria-hidden="true">
@@ -83,11 +83,6 @@ import settings from '../content/settings/main.json';
           <button type="submit" class="btn btn-primary submit-btn">Send Message →</button>
         </form>
 
-        <div class="form-success" id="form-success" aria-live="polite" hidden>
-          <div class="success-icon">✓</div>
-          <h3>Message Sent!</h3>
-          <p>Thanks for reaching out. Ben will get back to you within one business day.</p>
-        </div>
       </div>
 
       <aside class="contact-sidebar">
@@ -236,30 +231,6 @@ import settings from '../content/settings/main.json';
     font-size: 0.95rem;
   }
 
-  .form-success {
-    text-align: center;
-    padding: 3rem 2rem;
-    background: var(--off-white);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border);
-  }
-
-  .success-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--green);
-    color: var(--white);
-    font-size: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-  }
-
-  .form-success h3 { margin-bottom: 0.5rem; }
-  .form-success p { color: var(--text-muted); margin: 0; }
-
   /* SIDEBAR */
   .contact-info-card {
     background: var(--off-white);
@@ -384,30 +355,3 @@ import settings from '../content/settings/main.json';
   }
 </style>
 
-<script>
-  const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  const success = document.getElementById('form-success');
-
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
-
-    try {
-      const body = new URLSearchParams();
-      data.forEach((value, key) => body.append(key, value as string));
-
-      const res = await fetch('/contact/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body.toString(),
-      });
-
-      if (res.ok) {
-        form.hidden = true;
-        if (success) success.hidden = false;
-      }
-    } catch {
-      alert('There was an error sending your message. Please call or email directly.');
-    }
-  });
-</script>
