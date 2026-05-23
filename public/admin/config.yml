@@ -56,3 +56,29 @@ collections:
           - { label: "Email", name: "email", widget: "string" }
           - { label: "Address", name: "address", widget: "string" }
           - { label: "Service Area", name: "serviceArea", widget: "string" }
+
+      - label: "About Page"
+        name: "about"
+        file: "src/content/settings/about.json"
+        fields:
+          - { label: "Page Heading", name: "heroHeading", widget: "string" }
+          - { label: "Full Name & Title (e.g. Ben Smith, PE)", name: "name", widget: "string" }
+          - { label: "Headshot Photo", name: "photo", widget: "image", required: false }
+          - { label: "Lead Bio (italic intro paragraph)", name: "leadBio", widget: "text" }
+          - { label: "Bio Paragraph 1", name: "bio1", widget: "text" }
+          - { label: "Bio Paragraph 2", name: "bio2", widget: "text" }
+          - { label: "PE License Number", name: "licenseNumber", widget: "string" }
+          - label: "How Ben Works — Step 1"
+            name: "process1Title"
+            widget: "string"
+          - { label: "Step 1 Description", name: "process1Desc", widget: "text" }
+          - { label: "How Ben Works — Step 2", name: "process2Title", widget: "string" }
+          - { label: "Step 2 Description", name: "process2Desc", widget: "text" }
+          - { label: "How Ben Works — Step 3", name: "process3Title", widget: "string" }
+          - { label: "Step 3 Description", name: "process3Desc", widget: "text" }
+          - { label: "Value 1 Title", name: "value1Title", widget: "string" }
+          - { label: "Value 1 Description", name: "value1Desc", widget: "text" }
+          - { label: "Value 2 Title", name: "value2Title", widget: "string" }
+          - { label: "Value 2 Description", name: "value2Desc", widget: "text" }
+          - { label: "Value 3 Title", name: "value3Title", widget: "string" }
+          - { label: "Value 3 Description", name: "value3Desc", widget: "text" }

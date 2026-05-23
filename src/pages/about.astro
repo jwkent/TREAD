@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import settings from '../content/settings/main.json';
+import about from '../content/settings/about.json';
 ---
 
 <BaseLayout title="About" description="Meet Ben — licensed structural engineer and founder of Timber Ridge Engineering & Design in McMinnville, Oregon.">
@@ -11,17 +12,20 @@ import settings from '../content/settings/main.json';
   <div class="page-hero">
     <div class="container">
       <p class="section-label">About</p>
-      <h1>The Person Behind the Drawings</h1>
+      <h1>{about.heroHeading}</h1>
     </div>
   </div>
 
   <section class="section">
     <div class="container about-grid">
       <div class="about-photo">
-        <div class="photo-placeholder" aria-label="Photo of Ben coming soon">
-          <div class="photo-initials">B</div>
-          <p>Add your photo via the CMS</p>
-        </div>
+        {about.photo
+          ? <img src={about.photo} alt={about.name} class="about-photo-img" />
+          : <div class="photo-placeholder" aria-label="Photo coming soon">
+              <div class="photo-initials">B</div>
+              <p>Add your photo via the CMS</p>
+            </div>
+        }
         <div class="about-contact-card">
           <h4>Get in Touch</h4>
           <a href={`tel:${settings.phone.replace(/\D/g,'')}`} class="contact-item">
@@ -38,35 +42,35 @@ import settings from '../content/settings/main.json';
 
       <div class="about-content">
         <p class="section-label">Founder & Principal Engineer</p>
-        <h2>Ben [Last Name], PE</h2>
+        <h2>{about.name}</h2>
 
-        <p class="about-lead">{settings.aboutText}</p>
+        <p class="about-lead">{about.leadBio}</p>
 
-        <p>Ben started TREAD because he saw a gap: homeowners and contractors struggling to coordinate between separate engineering and design firms, leading to delays, miscommunication, and drawings that didn't reflect real-world construction constraints. By combining both disciplines under one roof, TREAD delivers a smoother process from the first sketch to the final stamp.</p>
+        <p>{about.bio1}</p>
 
-        <p>Every project gets Ben's direct attention — no junior staff handoffs, no losing details in translation.</p>
+        <p>{about.bio2}</p>
 
         <h3>How Ben Works</h3>
         <ul class="process-list">
           <li>
             <span class="step-num">01</span>
             <div>
-              <strong>Listen first</strong>
-              <p>Every project starts with a conversation about your goals, budget, and timeline — before any drawings are made.</p>
+              <strong>{about.process1Title}</strong>
+              <p>{about.process1Desc}</p>
             </div>
           </li>
           <li>
             <span class="step-num">02</span>
             <div>
-              <strong>Design to build</strong>
-              <p>Every detail on the drawings reflects how things are actually built in the field — materials available, trades involved, permit requirements.</p>
+              <strong>{about.process2Title}</strong>
+              <p>{about.process2Desc}</p>
             </div>
           </li>
           <li>
             <span class="step-num">03</span>
             <div>
-              <strong>Stay available</strong>
-              <p>Ben stays reachable throughout construction. When the contractor has a question, you get a real answer fast — not a week later.</p>
+              <strong>{about.process3Title}</strong>
+              <p>{about.process3Desc}</p>
             </div>
           </li>
         </ul>
@@ -78,7 +82,7 @@ import settings from '../content/settings/main.json';
               <div class="cred-badge orange">PE</div>
               <div>
                 <strong>{settings.credentials}</strong>
-                <span>License #XXXXX — update via CMS</span>
+                <span>License #{about.licenseNumber}</span>
               </div>
             </div>
             <div class="cred-item">
@@ -108,18 +112,18 @@ import settings from '../content/settings/main.json';
       <div class="values-grid">
         <div class="value-card">
           <div class="value-icon" style="background:var(--orange)">▲</div>
-          <h3>Buildable First</h3>
-          <p>Designs are made to be built, not just drawn. Ben considers material availability, construction sequencing, and contractor workflow in every document.</p>
+          <h3>{about.value1Title}</h3>
+          <p>{about.value1Desc}</p>
         </div>
         <div class="value-card">
           <div class="value-icon" style="background:var(--green)">◈</div>
-          <h3>Cost Conscious</h3>
-          <p>Good engineering finds the efficient solution — not the over-engineered one. The goal is a building that performs well and a budget that holds.</p>
+          <h3>{about.value2Title}</h3>
+          <p>{about.value2Desc}</p>
         </div>
         <div class="value-card">
           <div class="value-icon" style="background:var(--brown)">◉</div>
-          <h3>Collaborative</h3>
-          <p>Ben works with homeowners, general contractors, and architects as a team member, not just a stamping service. Communication is part of the job.</p>
+          <h3>{about.value3Title}</h3>
+          <p>{about.value3Desc}</p>
         </div>
       </div>
     </div>
@@ -142,6 +146,14 @@ import settings from '../content/settings/main.json';
     grid-template-columns: 320px 1fr;
     gap: 4rem;
     align-items: start;
+  }
+
+  .about-photo-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    margin-bottom: 1.5rem;
   }
 
   .photo-placeholder {
