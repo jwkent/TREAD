@@ -1,0 +1,373 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import settings from '../content/settings/main.json';
+---
+
+<BaseLayout title="About" description="Meet Ben — licensed structural engineer and founder of Timber Ridge Engineering & Design in McMinnville, Oregon.">
+  <Header />
+
+  <div class="page-hero">
+    <div class="container">
+      <p class="section-label">About</p>
+      <h1>The Person Behind the Drawings</h1>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container about-grid">
+      <div class="about-photo">
+        <div class="photo-placeholder" aria-label="Photo of Ben coming soon">
+          <div class="photo-initials">B</div>
+          <p>Add your photo via the CMS</p>
+        </div>
+        <div class="about-contact-card">
+          <h4>Get in Touch</h4>
+          <a href={`tel:${settings.phone.replace(/\D/g,'')}`} class="contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.72a16 16 0 0 0 6.29 6.29l.91-.85a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.01z"/></svg>
+            {settings.phone}
+          </a>
+          <a href={`mailto:${settings.email}`} class="contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            {settings.email}
+          </a>
+          <a href="/contact" class="btn btn-primary" style="margin-top:0.5rem;width:100%;justify-content:center">Request a Consultation</a>
+        </div>
+      </div>
+
+      <div class="about-content">
+        <p class="section-label">Founder & Principal Engineer</p>
+        <h2>Ben [Last Name], PE</h2>
+
+        <p class="about-lead">{settings.aboutText}</p>
+
+        <p>Ben started TREAD because he saw a gap: homeowners and contractors struggling to coordinate between separate engineering and design firms, leading to delays, miscommunication, and drawings that didn't reflect real-world construction constraints. By combining both disciplines under one roof, TREAD delivers a smoother process from the first sketch to the final stamp.</p>
+
+        <p>Every project gets Ben's direct attention — no junior staff handoffs, no losing details in translation.</p>
+
+        <h3>How Ben Works</h3>
+        <ul class="process-list">
+          <li>
+            <span class="step-num">01</span>
+            <div>
+              <strong>Listen first</strong>
+              <p>Every project starts with a conversation about your goals, budget, and timeline — before any drawings are made.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">02</span>
+            <div>
+              <strong>Design to build</strong>
+              <p>Every detail on the drawings reflects how things are actually built in the field — materials available, trades involved, permit requirements.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">03</span>
+            <div>
+              <strong>Stay available</strong>
+              <p>Ben stays reachable throughout construction. When the contractor has a question, you get a real answer fast — not a week later.</p>
+            </div>
+          </li>
+        </ul>
+
+        <div class="credentials-block">
+          <h3>Credentials & Licensing</h3>
+          <div class="credentials-grid">
+            <div class="cred-item">
+              <div class="cred-badge orange">PE</div>
+              <div>
+                <strong>{settings.credentials}</strong>
+                <span>License #XXXXX — update via CMS</span>
+              </div>
+            </div>
+            <div class="cred-item">
+              <div class="cred-badge green">✓</div>
+              <div>
+                <strong>Residential Structural Specialist</strong>
+                <span>Gravity & lateral systems, new construction & remodels</span>
+              </div>
+            </div>
+            <div class="cred-item">
+              <div class="cred-badge brown">◎</div>
+              <div>
+                <strong>Service Area</strong>
+                <span>{settings.serviceArea}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="values-section">
+    <div class="container">
+      <p class="section-label">Our Approach</p>
+      <h2 class="section-title" style="color:var(--white)">Built on Three Principles</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon" style="background:var(--orange)">▲</div>
+          <h3>Buildable First</h3>
+          <p>Designs are made to be built, not just drawn. Ben considers material availability, construction sequencing, and contractor workflow in every document.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon" style="background:var(--green)">◈</div>
+          <h3>Cost Conscious</h3>
+          <p>Good engineering finds the efficient solution — not the over-engineered one. The goal is a building that performs well and a budget that holds.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon" style="background:var(--brown)">◉</div>
+          <h3>Collaborative</h3>
+          <p>Ben works with homeowners, general contractors, and architects as a team member, not just a stamping service. Communication is part of the job.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: var(--dark);
+    border-bottom: 3px solid var(--orange);
+    padding: 3.5rem 0 2.5rem;
+  }
+
+  .page-hero h1 { color: var(--white); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .photo-placeholder {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, var(--cream), var(--border));
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border: 2px dashed var(--border);
+  }
+
+  .photo-initials {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .photo-placeholder p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin: 0;
+  }
+
+  .about-contact-card {
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+  }
+
+  .about-contact-card h4 {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text);
+    font-size: 0.9rem;
+    text-decoration: none;
+    padding: 0.4rem 0;
+    transition: color 0.15s;
+  }
+
+  .contact-item:hover { color: var(--orange); }
+  .contact-item svg { color: var(--orange); flex-shrink: 0; }
+
+  .about-content h2 { margin-bottom: 1.25rem; }
+
+  .about-lead {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    border-left: 3px solid var(--orange);
+    padding-left: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .about-content h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: var(--dark);
+  }
+
+  .process-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .process-list li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--orange);
+    min-width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .process-list strong {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+    color: var(--dark);
+  }
+
+  .process-list p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .credentials-block {
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    margin-top: 2rem;
+  }
+
+  .credentials-block h3 { margin-top: 0; margin-bottom: 1.25rem; }
+
+  .credentials-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .cred-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .cred-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.75rem;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+
+  .cred-badge.orange { background: var(--orange); }
+  .cred-badge.green { background: var(--green); }
+  .cred-badge.brown { background: var(--brown); }
+
+  .cred-item strong {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--dark);
+  }
+
+  .cred-item span {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  /* VALUES */
+  .values-section {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--green-dark) 100%);
+    padding: 5rem 0;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .value-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1.75rem;
+  }
+
+  .value-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: var(--white);
+    margin-bottom: 1.25rem;
+  }
+
+  .value-card h3 {
+    color: var(--white);
+    font-size: 1.05rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .value-card p {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.6);
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-photo { max-width: 360px; }
+    .values-grid { grid-template-columns: 1fr; }
+  }
+</style>

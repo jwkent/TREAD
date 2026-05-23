@@ -1,0 +1,569 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
+import settings from '../content/settings/main.json';
+
+const featuredProjects = (await getCollection('projects'))
+  .filter(p => p.data.featured)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const testimonials = (await getCollection('testimonials'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const services = [
+  { icon: '⬡', title: 'General Structural Engineering', desc: 'Gravity and lateral engineering for residential construction — remodels and new builds.' },
+  { icon: '⬡', title: 'Site Assessments', desc: 'Evaluation of existing structures with foundation issues, truss damage, or uneven floors, plus repair recommendations.' },
+  { icon: '⬡', title: 'Feasibility Studies', desc: 'Pre-remodel analysis covering cost implications, functional considerations, and contractor-friendly design suggestions.' },
+  { icon: '⬡', title: 'Retaining Wall Design', desc: 'Solutions from basement foundations to outdoor landscaping — sized and detailed for the actual conditions.' },
+  { icon: '⬡', title: 'Home Design Services', desc: 'Full planning from concept layout through final drafting and specifications, coordinated with structural engineering.' },
+  { icon: '⬡', title: 'Remodeling Plans', desc: 'Creative residential redesign that balances your aesthetic vision with practical construction efficiency.' },
+];
+---
+
+<BaseLayout title="Home" description={settings.heroSubheadline}>
+  <Header />
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container hero-content">
+      <p class="section-label" style="color: var(--orange-light)">McMinnville, Oregon</p>
+      <h1>{settings.heroHeadline}</h1>
+      <p class="hero-sub">{settings.heroSubheadline}</p>
+      <div class="hero-actions">
+        <a href="/services" class="btn btn-primary">View Our Services</a>
+        <a href="/contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+      <div class="hero-trust">
+        <span>✓ Licensed PE — State of Oregon</span>
+        <span>✓ Residential Specialist</span>
+        <span>✓ Contractor-Ready Drawings</span>
+      </div>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </section>
+
+  <!-- SERVICES OVERVIEW -->
+  <section class="section" id="services">
+    <div class="container">
+      <p class="section-label">What We Do</p>
+      <h2 class="section-title">Engineering & Design Services</h2>
+      <p class="section-subtitle">One firm for both the structural engineering and the design — fewer handoffs, cleaner drawings, faster permits.</p>
+
+      <div class="services-grid">
+        {services.map((s, i) => (
+          <div class="service-card">
+            <div class="service-num">{String(i + 1).padStart(2, '0')}</div>
+            <h3>{s.title}</h3>
+            <p>{s.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="services-cta">
+        <a href="/services" class="btn btn-outline-dark">See Full Service Details →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT STRIP -->
+  <section class="about-strip">
+    <div class="container about-strip-inner">
+      <div class="about-strip-text">
+        <p class="section-label">About TREAD</p>
+        <h2>Engineering You Can Build With</h2>
+        <p>{settings.aboutText}</p>
+        <a href="/about" class="btn btn-primary" style="margin-top:0.5rem">Meet Ben →</a>
+      </div>
+      <div class="about-strip-badges">
+        <div class="credential-badge">
+          <div class="cred-icon" aria-hidden="true">PE</div>
+          <div>
+            <strong>Licensed Professional Engineer</strong>
+            <span>State of Oregon</span>
+          </div>
+        </div>
+        <div class="credential-badge">
+          <div class="cred-icon green" aria-hidden="true">✓</div>
+          <div>
+            <strong>Residential Specialist</strong>
+            <span>Remodels & New Construction</span>
+          </div>
+        </div>
+        <div class="credential-badge">
+          <div class="cred-icon brown" aria-hidden="true">◎</div>
+          <div>
+            <strong>Willamette Valley Based</strong>
+            <span>McMinnville, OR</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PROJECTS -->
+  {featuredProjects.length > 0 && (
+    <section class="section" style="background: var(--off-white)">
+      <div class="container">
+        <p class="section-label">Our Work</p>
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">A sample of recent residential engineering and design work across the Willamette Valley.</p>
+
+        <div class="projects-grid">
+          {featuredProjects.map(project => (
+            <a href={`/projects/${project.slug}`} class="project-card">
+              <div class="project-img-wrap">
+                {project.data.coverImage
+                  ? <img src={project.data.coverImage} alt={project.data.title} loading="lazy" />
+                  : <div class="project-img-placeholder" aria-hidden="true"><span>Photo Coming Soon</span></div>
+                }
+                <span class="badge badge-orange project-badge">{project.data.category}</span>
+              </div>
+              <div class="project-card-body">
+                <h3>{project.data.title}</h3>
+                <p>{project.data.description}</p>
+                <span class="project-link">View Project →</span>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <div style="text-align:center; margin-top:2.5rem">
+          <a href="/projects" class="btn btn-outline-dark">View All Projects →</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- TESTIMONIALS -->
+  {testimonials.length > 0 && (
+    <section class="section testimonials-section">
+      <div class="container">
+        <p class="section-label">Client Feedback</p>
+        <h2 class="section-title">What Homeowners & Contractors Say</h2>
+
+        <div class="testimonials-grid">
+          {testimonials.map(t => (
+            <div class="testimonial-card">
+              <svg class="quote-icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1zm12 0c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+              <p class="quote-text">"{t.data.quote}"</p>
+              <div class="quote-attribution">
+                <strong>{t.data.name}</strong>
+                {t.data.projectType && <span>{t.data.projectType}{t.data.location ? ` · ${t.data.location}` : ''}</span>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="container cta-banner-inner">
+      <div>
+        <h2>Ready to Start Your Project?</h2>
+        <p>Whether you're planning a remodel or building from the ground up, let's talk through what you need.</p>
+      </div>
+      <div class="cta-banner-actions">
+        <a href="/contact" class="btn btn-primary">Get a Free Consultation</a>
+        <a href={`tel:${settings.phone.replace(/\D/g,'')}`} class="btn btn-outline">{settings.phone}</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--dark);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(135deg, rgba(212,97,26,0.18) 0%, transparent 50%),
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.015) 40px,
+        rgba(255,255,255,0.015) 41px
+      );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    max-width: 760px;
+  }
+
+  .hero-content h1 {
+    color: var(--white);
+    margin-bottom: 1.25rem;
+    font-weight: 800;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.7);
+    max-width: 580px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-trust {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-trust span {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.45);
+    font-weight: 500;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.25);
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    position: relative;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .service-card:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--orange);
+  }
+
+  .service-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--orange);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+  }
+
+  .service-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+    color: var(--dark);
+  }
+
+  .service-card p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 0;
+    line-height: 1.6;
+  }
+
+  .services-cta {
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    background: linear-gradient(135deg, var(--green-dark) 0%, var(--dark) 60%);
+    padding: 5rem 0;
+    color: var(--white);
+  }
+
+  .about-strip-inner {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-strip-text h2 {
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  .about-strip-text p {
+    color: rgba(255,255,255,0.7);
+  }
+
+  .about-strip-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .credential-badge {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-lg);
+    padding: 1.1rem 1.25rem;
+  }
+
+  .cred-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .cred-icon.green { background: var(--green); }
+  .cred-icon.brown { background: var(--brown); }
+
+  .credential-badge strong {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.1rem;
+  }
+
+  .credential-badge span {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+  }
+
+  .project-img-wrap {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: var(--cream);
+  }
+
+  .project-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--cream), var(--border));
+  }
+
+  .project-img-placeholder span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .project-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+  }
+
+  .project-card-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-card-body h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-card-body p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    flex: 1;
+    margin-bottom: 1rem;
+  }
+
+  .project-link {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--orange);
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials-section {
+    background: var(--cream);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .testimonial-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    border-left: 4px solid var(--green);
+    box-shadow: var(--shadow);
+  }
+
+  .quote-icon {
+    color: var(--orange);
+    opacity: 0.4;
+    margin-bottom: 1rem;
+  }
+
+  .quote-text {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 1.25rem;
+  }
+
+  .quote-attribution strong {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--dark);
+  }
+
+  .quote-attribution span {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  /* CTA BANNER */
+  .cta-banner {
+    background: var(--orange);
+    padding: 4rem 0;
+  }
+
+  .cta-banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-banner h2 {
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgba(255,255,255,0.8);
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .cta-banner-actions {
+    display: flex;
+    gap: 1rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+
+  .cta-banner .btn-primary {
+    background: var(--white);
+    color: var(--orange);
+    border-color: var(--white);
+  }
+
+  .cta-banner .btn-primary:hover {
+    background: var(--off-white);
+    border-color: var(--off-white);
+    color: var(--orange-hover);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .about-strip-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+
+  @media (max-width: 640px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .hero-trust { flex-direction: column; gap: 0.5rem; }
+    .cta-banner-inner { flex-direction: column; text-align: center; }
+    .cta-banner-actions { justify-content: center; }
+  }
+</style>

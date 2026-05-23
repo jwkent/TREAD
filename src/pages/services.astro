@@ -1,0 +1,305 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import settings from '../content/settings/main.json';
+
+const services = [
+  {
+    id: 'structural-engineering',
+    title: 'General Structural Engineering',
+    category: 'Engineering',
+    tagline: 'The math and the stamp that make your project code-compliant and contractor-ready.',
+    description: 'Gravity and lateral engineering for residential construction — new builds, additions, and remodels. This includes beam and header sizing, post and footing design, shear wall layout, and any other structural calculations required by your building department.',
+    deliverables: ['Structural calculations package', 'Stamped structural drawings', 'Foundation plan & details', 'Shear wall schedule', 'Building department response letters'],
+    good_for: ['New home construction', 'Additions and ADUs', 'Load-bearing wall modifications', 'Earthquake or wind upgrades'],
+  },
+  {
+    id: 'site-assessments',
+    title: 'Site Assessments',
+    category: 'Engineering',
+    tagline: 'When something doesn\'t look right — find out what\'s actually going on.',
+    description: 'On-site evaluation of existing structures showing signs of distress: foundation cracks, truss damage, settling floors, wall movement, or other concerns. Ben will examine the conditions, identify the cause, and provide a written assessment with repair recommendations.',
+    deliverables: ['Written site assessment report', 'Photo documentation', 'Cause-of-distress analysis', 'Repair recommendations', 'Contractor scope-of-work guidance'],
+    good_for: ['Foundation cracks or movement', 'Sagging or uneven floors', 'Truss or rafter damage', 'Pre-purchase structural inspections', 'Post-storm or post-flood evaluation'],
+  },
+  {
+    id: 'feasibility-studies',
+    title: 'Feasibility Studies',
+    category: 'Engineering + Design',
+    tagline: 'Know what you\'re getting into before you commit to a remodel.',
+    description: 'Before spending money on full design, a feasibility study evaluates whether your proposed remodel is structurally and financially realistic. Ben looks at what\'s in the walls and floors, what would need to change, and what it\'s likely to cost — giving you the information to make a smart decision.',
+    deliverables: ['Feasibility report', 'Structural constraints summary', 'Preliminary cost range', 'Design option sketches', 'Go / no-go recommendation'],
+    good_for: ['Open-concept remodels', 'Attic or basement conversions', 'Large addition planning', 'Evaluating a fixer property'],
+  },
+  {
+    id: 'retaining-wall-design',
+    title: 'Retaining Wall Design',
+    category: 'Engineering',
+    tagline: 'From a garden terrace to a basement wall — designed for the actual conditions.',
+    description: 'Engineered retaining wall design for residential applications. Ben designs for the specific soil, surcharge, drainage, and height conditions of your site — not a one-size-fits-all solution. Walls are detailed for constructability by concrete, masonry, or timber contractors.',
+    deliverables: ['Wall design with cross-sections', 'Footing and drainage details', 'Structural calculations', 'Stamped drawings for permit', 'Material specification notes'],
+    good_for: ['Hillside lots', 'Landscape terracing', 'Driveway grade changes', 'Basement and garage walls'],
+  },
+  {
+    id: 'home-design',
+    title: 'Home Design Services',
+    category: 'Design',
+    tagline: 'From napkin sketch to permitted construction documents.',
+    description: 'Full home design from initial concept through final construction documents. Ben works with you on floor plan layout, exterior design, and interior flow — then integrates the structural engineering directly into the drawings so you get one cohesive package, not two separate sets.',
+    deliverables: ['Floor plans', 'Exterior elevations', 'Roof plan', 'Foundation plan', 'Structural drawings (included)', 'Door & window schedule', 'Energy compliance documentation'],
+    good_for: ['Custom new home construction', 'Major renovations', 'Detached garages and shops', 'ADUs (accessory dwelling units)'],
+  },
+  {
+    id: 'remodeling-plans',
+    title: 'Remodeling Plans',
+    category: 'Design + Engineering',
+    tagline: 'Drawings that show contractors exactly what to do — no guesswork.',
+    description: 'Design and engineering drawings for residential remodels. Whether you\'re reconfiguring a floor plan, adding square footage, or changing the look of your exterior, Ben produces contractor-ready drawings that satisfy the building department and answer the field questions before they\'re asked.',
+    deliverables: ['Existing conditions plan', 'Proposed floor plan', 'Affected elevations and sections', 'Structural modifications (included)', 'Permit-ready drawing set'],
+    good_for: ['Kitchen and bath remodels', 'Basement finishing', 'Room additions', 'Garage conversions'],
+  },
+];
+---
+
+<BaseLayout title="Services" description="Structural engineering and home design services for residential construction in the Willamette Valley — remodels, new builds, site assessments, retaining walls, and more.">
+  <Header />
+
+  <div class="page-hero">
+    <div class="container">
+      <p class="section-label">Services</p>
+      <h1>Engineering & Design Under One Roof</h1>
+      <p class="hero-sub">One firm handles both the structural engineering and the design — so your drawings are coordinated, your permit process is smoother, and your contractor has one person to call.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="services-list">
+        {services.map((service, i) => (
+          <div class="service-detail" id={service.id}>
+            <div class="service-header">
+              <div class="service-meta">
+                <span class={`badge ${service.category.includes('Design') ? 'badge-green' : 'badge-orange'}`}>{service.category}</span>
+                <span class="service-num">{String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <h2>{service.title}</h2>
+              <p class="service-tagline">{service.tagline}</p>
+            </div>
+
+            <div class="service-body">
+              <div class="service-desc">
+                <p>{service.description}</p>
+              </div>
+
+              <div class="service-columns">
+                <div class="service-col">
+                  <h4>What You Get</h4>
+                  <ul class="deliverable-list">
+                    {service.deliverables.map(d => (
+                      <li>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div class="service-col">
+                  <h4>Good For</h4>
+                  <ul class="goodfor-list">
+                    {service.good_for.map(g => (
+                      <li>
+                        <span class="goodfor-dot" aria-hidden="true"></span>
+                        {g}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-banner">
+    <div class="container cta-banner-inner">
+      <div>
+        <h2>Not Sure Which Service You Need?</h2>
+        <p>Describe your project and Ben will point you in the right direction — no charge for the initial conversation.</p>
+      </div>
+      <div class="cta-banner-actions">
+        <a href="/contact" class="btn btn-primary">Start the Conversation</a>
+        <a href={`tel:${settings.phone.replace(/\D/g,'')}`} class="btn btn-outline">{settings.phone}</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: var(--dark);
+    border-bottom: 3px solid var(--orange);
+    padding: 3.5rem 0 2.5rem;
+  }
+
+  .page-hero h1 { color: var(--white); margin-bottom: 1rem; }
+
+  .hero-sub {
+    color: rgba(255,255,255,0.65);
+    font-size: 1.05rem;
+    max-width: 640px;
+    margin: 0;
+  }
+
+  .services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .service-detail {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 3rem;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .service-detail:last-child { border-bottom: none; }
+
+  .service-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .service-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--border);
+  }
+
+  .service-header h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .service-tagline {
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .service-body { }
+
+  .service-desc p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 1.75rem;
+    line-height: 1.75;
+  }
+
+  .service-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    background: var(--off-white);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+  }
+
+  .service-col h4 {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.875rem;
+  }
+
+  .deliverable-list,
+  .goodfor-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .deliverable-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .deliverable-list svg {
+    color: var(--green);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .goodfor-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .goodfor-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  /* CTA BANNER */
+  .cta-banner {
+    background: var(--orange);
+    padding: 4rem 0;
+  }
+
+  .cta-banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-banner h2 { color: var(--white); margin-bottom: 0.5rem; }
+  .cta-banner p { color: rgba(255,255,255,0.8); margin: 0; }
+
+  .cta-banner-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .cta-banner .btn-primary {
+    background: var(--white);
+    color: var(--orange);
+    border-color: var(--white);
+  }
+  .cta-banner .btn-primary:hover {
+    background: var(--off-white);
+    border-color: var(--off-white);
+    color: var(--orange-hover);
+  }
+
+  @media (max-width: 860px) {
+    .service-detail { grid-template-columns: 1fr; gap: 1.5rem; }
+    .service-columns { grid-template-columns: 1fr; }
+    .cta-banner-inner { flex-direction: column; text-align: center; }
+    .cta-banner-actions { justify-content: center; }
+  }
+</style>

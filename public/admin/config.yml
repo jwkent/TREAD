@@ -1,0 +1,58 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "projects"
+    label: "Projects"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - "Structural Engineering"
+          - "Home Design"
+          - "Remodeling"
+          - "Retaining Wall"
+          - "Site Assessment"
+          - "Feasibility Study"
+      - { label: "Cover Image", name: "coverImage", widget: "image", required: false }
+      - { label: "Date Completed", name: "date", widget: "datetime" }
+      - { label: "Feature on Homepage", name: "featured", widget: "boolean", default: false }
+      - { label: "Project Details (optional)", name: "body", widget: "markdown", required: false }
+
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "src/content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Client Name", name: "name", widget: "string" }
+      - { label: "Quote", name: "quote", widget: "text" }
+      - { label: "Project Type", name: "projectType", widget: "string", required: false }
+      - { label: "Location", name: "location", widget: "string", required: false }
+      - { label: "Display Order", name: "order", widget: "number", default: 99 }
+
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - label: "General"
+        name: "general"
+        file: "src/content/settings/main.json"
+        fields:
+          - { label: "Hero Headline", name: "heroHeadline", widget: "string" }
+          - { label: "Hero Subheadline", name: "heroSubheadline", widget: "text" }
+          - { label: "About/Bio Text", name: "aboutText", widget: "text" }
+          - { label: "Credentials / License Info", name: "credentials", widget: "string" }
+          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Address", name: "address", widget: "string" }
+          - { label: "Service Area", name: "serviceArea", widget: "string" }

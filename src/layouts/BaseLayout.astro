@@ -1,0 +1,183 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Structural engineering and home design services for residential construction in the Willamette Valley, Oregon.' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title} | Timber Ridge Engineering & Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style is:global>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange:        #D4611A;
+      --orange-hover:  #B84E10;
+      --orange-light:  #F2864A;
+      --orange-tint:   #FDF0E6;
+      --black:         #111111;
+      --dark:          #1C1C1C;
+      --text:          #2B2B2B;
+      --text-muted:    #666666;
+      --white:         #FFFFFF;
+      --off-white:     #F6F2EB;
+      --cream:         #EDE7DA;
+      --green:         #3C5A26;
+      --green-dark:    #2A4019;
+      --green-light:   #506F36;
+      --brown:         #7A5130;
+      --brown-light:   #A06B43;
+      --border:        #D6CFC3;
+      --shadow:        0 2px 12px rgba(0,0,0,0.10);
+      --shadow-lg:     0 8px 32px rgba(0,0,0,0.14);
+      --radius:        6px;
+      --radius-lg:     12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--white);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--dark);
+    }
+
+    h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+    h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); }
+    h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+
+    p { margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    a { color: var(--orange); text-decoration: none; }
+    a:hover { color: var(--orange-hover); }
+
+    img { max-width: 100%; display: block; }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section {
+      padding: 5rem 0;
+    }
+
+    .section-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 3rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: var(--radius);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.1s;
+      text-decoration: none;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-primary {
+      background: var(--orange);
+      color: var(--white);
+      border-color: var(--orange);
+    }
+    .btn-primary:hover {
+      background: var(--orange-hover);
+      border-color: var(--orange-hover);
+      color: var(--white);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border-color: rgba(255,255,255,0.6);
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--white);
+      color: var(--white);
+    }
+
+    .btn-outline-dark {
+      background: transparent;
+      color: var(--orange);
+      border-color: var(--orange);
+    }
+    .btn-outline-dark:hover {
+      background: var(--orange);
+      color: var(--white);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-orange {
+      background: var(--orange-tint);
+      color: var(--orange);
+    }
+
+    .badge-green {
+      background: #e8f0e3;
+      color: var(--green);
+    }
+
+    @media (max-width: 768px) {
+      .section { padding: 3.5rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <slot />
+</body>
+</html>

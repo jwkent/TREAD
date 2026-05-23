@@ -1,0 +1,270 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection, getEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(project => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+
+const allProjects = await getCollection('projects');
+const related = allProjects
+  .filter(p => p.slug !== project.slug && p.data.category === project.data.category)
+  .slice(0, 2);
+---
+
+<BaseLayout title={project.data.title} description={project.data.description}>
+  <Header />
+
+  <div class="page-hero">
+    <div class="container">
+      <a href="/projects" class="back-link">← All Projects</a>
+      <span class={`badge ${project.data.category.includes('Design') ? 'badge-green' : 'badge-orange'}`} style="margin-bottom:0.75rem;display:inline-block">
+        {project.data.category}
+      </span>
+      <h1>{project.data.title}</h1>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container project-layout">
+      <div class="project-main">
+        <div class="project-img-wrap">
+          {project.data.coverImage
+            ? <img src={project.data.coverImage} alt={project.data.title} />
+            : <div class="project-img-placeholder">
+                <span>Project photos coming soon</span>
+                <small>Add via the CMS at /admin</small>
+              </div>
+          }
+        </div>
+
+        <div class="project-body prose">
+          <p class="project-lead">{project.data.description}</p>
+          <Content />
+        </div>
+      </div>
+
+      <aside class="project-sidebar">
+        <div class="sidebar-card">
+          <h4>Project Details</h4>
+          <dl>
+            <dt>Category</dt>
+            <dd>{project.data.category}</dd>
+            <dt>Date Completed</dt>
+            <dd>{project.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</dd>
+          </dl>
+        </div>
+
+        <div class="sidebar-cta">
+          <h4>Have a similar project?</h4>
+          <p>Get in touch to discuss your needs — the first conversation is always free.</p>
+          <a href="/contact" class="btn btn-primary" style="width:100%;justify-content:center">Get a Quote</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="related-section">
+      <div class="container">
+        <h3>More {project.data.category} Projects</h3>
+        <div class="related-grid">
+          {related.map(r => (
+            <a href={`/projects/${r.slug}`} class="related-card">
+              <div class="related-img">
+                {r.data.coverImage
+                  ? <img src={r.data.coverImage} alt={r.data.title} loading="lazy" />
+                  : <div class="related-placeholder"></div>
+                }
+              </div>
+              <div class="related-body">
+                <h4>{r.data.title}</h4>
+                <span>View Project →</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: var(--dark);
+    border-bottom: 3px solid var(--orange);
+    padding: 2.5rem 0;
+  }
+
+  .back-link {
+    display: inline-block;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.85rem;
+    text-decoration: none;
+    margin-bottom: 1rem;
+    transition: color 0.15s;
+  }
+  .back-link:hover { color: var(--white); }
+
+  .page-hero h1 { color: var(--white); }
+
+  .project-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .project-img-wrap {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border);
+  }
+
+  .project-img-wrap img {
+    width: 100%;
+    max-height: 480px;
+    object-fit: cover;
+  }
+
+  .project-img-placeholder {
+    height: 360px;
+    background: linear-gradient(135deg, var(--cream), var(--border));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .project-img-placeholder span {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .project-img-placeholder small {
+    font-size: 0.75rem;
+    color: var(--border);
+  }
+
+  .project-lead {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    font-style: italic;
+    border-left: 3px solid var(--orange);
+    padding-left: 1.25rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .prose { font-size: 0.95rem; line-height: 1.8; }
+  .prose h2, .prose h3 { margin-top: 2rem; margin-bottom: 0.75rem; }
+  .prose ul, .prose ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+  .prose li { margin-bottom: 0.3rem; }
+
+  .sidebar-card, .sidebar-cta {
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .sidebar-card h4, .sidebar-cta h4 {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  dl { display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1rem; }
+
+  dt {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  dd {
+    font-size: 0.875rem;
+    color: var(--text);
+  }
+
+  .sidebar-cta p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .related-section {
+    background: var(--off-white);
+    padding: 3rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .related-section h3 { margin-bottom: 1.5rem; }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .related-card {
+    display: flex;
+    gap: 1rem;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s;
+  }
+
+  .related-card:hover { box-shadow: var(--shadow); }
+
+  .related-img {
+    width: 100px;
+    flex-shrink: 0;
+    background: var(--cream);
+  }
+
+  .related-img img { width: 100%; height: 100%; object-fit: cover; }
+  .related-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, var(--cream), var(--border)); }
+
+  .related-body {
+    padding: 1rem 1rem 1rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  .related-body h4 { font-size: 0.9rem; margin: 0; }
+
+  .related-body span {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--orange);
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  @media (max-width: 860px) {
+    .project-layout { grid-template-columns: 1fr; }
+    .related-grid { grid-template-columns: 1fr; }
+  }
+</style>
